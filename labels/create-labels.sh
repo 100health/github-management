@@ -17,8 +17,6 @@ if [ -z $GITHUB_TOKEN ]; then
   exit 1
 fi
 
-# OWNER="100health"
-# REPO="redox-github-management"
 LABELS=$(cat labels.json)
 NUM_LABELS=$(echo $LABELS | jq '. | length')
 REPOS=$(cat ../repos.json)
@@ -32,7 +30,7 @@ do
   NAME=$(echo $LABELS | jq -r --arg labelIdx $labelIdx '.[$labelIdx|tonumber].name')
   COLOR=$(echo $LABELS | jq -r --arg labelIdx $labelIdx '.[$labelIdx|tonumber].color')
 
-  echo "Creating / Updating label $NAME with color $COLOR"
+  echo "Creating / Updating label \"$NAME\" with color \"$COLOR\""
 
   repoIdx=0
   while [[ $repoIdx -lt $NUM_REPOS ]]

@@ -74,7 +74,7 @@ createLabel () {
       return 1
     fi
   else
-    echo "Created label $_NAME with color $_COLOR in $_OWNER/$_REPO."
+    echo "Created label \"$_NAME\" with color \"$_COLOR\" in \"$_OWNER/$_REPO\"."
   fi
 }
 
@@ -84,11 +84,16 @@ updateLabel () {
   # -c - the color of the label
   # -o - the owner of the repo
   # -r - the repo
+  # -u - updated name
   for i in "$@"
   do
   case $i in
     -n=*|--name=*)
     local _NAME="${i#*=}"
+    shift # past argument=value
+    ;;
+    -u=*|--updated-name=*)
+    local _NEW_NAME="${i#*=}"
     shift # past argument=value
     ;;
     -c=*|--color=*)
@@ -128,7 +133,11 @@ updateLabel () {
     return 1
   fi
 
-  local CURL_OUTPUT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -X PATCH "https://api.github.com/repos/$_OWNER/$_REPO/labels/${_NAME// /%20}" -d "{\"name\":\"$_NAME\", \"color\":\"$_COLOR\"}")
+  if [[ -z "${_NEW_NAME:-}" ]]; then
+    local _NEW_NAME=$_NAME
+  fi
+
+  local CURL_OUTPUT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -X PATCH "https://api.github.com/repos/$_OWNER/$_REPO/labels/${_NAME// /%20}" -d "{\"name\":\"$_NEW_NAME\", \"color\":\"$_COLOR\"}")
   local HAS_ERROR=$(echo "$CURL_OUTPUT" | jq -r '.errors // empty')
 
   # Check for error
@@ -139,7 +148,7 @@ updateLabel () {
     echo "$CURL_OUTPUT"
     return 1
   else
-    echo "Updated label $_NAME with color $_COLOR in $_OWNER/$_REPO."
+    echo "Updated label \"$_NAME\" with new name \"$_NEW_NAME\" and color \"$_COLOR\" in \"$_OWNER/$_REPO\"."
   fi
 
 }
