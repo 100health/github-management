@@ -34,6 +34,11 @@ REPOS=$(cat ../repos.json)
 NUM_REPOS=$(echo $REPOS | jq '. | length')
 
 source ./label-functions.sh
+source ../warn-prompt.sh
+
+echo "This will rename the label \"$OLD_NAME\" to \"$NEW_NAME\" in all repos in repos.json"
+
+warnPrompt "Once you do this, remember to update the labels.json file with the new name of the label\n"
 
 echo "Renameing label \"$OLD_NAME\" to \"$NEW_NAME\""
 COLOR=$(echo $LABELS | jq -r --arg OLD_NAME "$OLD_NAME" '.[] | select(.name==$OLD_NAME) | .color')
