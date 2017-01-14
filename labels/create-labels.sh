@@ -23,6 +23,11 @@ REPOS=$(cat ../repos.json)
 NUM_REPOS=$(echo $REPOS | jq '. | length')
 
 source ./label-functions.sh
+source ../warn-prompt.sh
+
+echo "This will create all the labels defined in labels.json in all repos in repos.json"
+
+warnPrompt "Make sure the labels in labels.json are accurate!.\n"
 
 labelIdx=0
 while [[ $labelIdx -lt $NUM_LABELS ]]

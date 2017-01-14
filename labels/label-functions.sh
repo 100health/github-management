@@ -152,3 +152,58 @@ updateLabel () {
   fi
 
 }
+
+deleteLabel () {
+  # Parsing out the arguments for the function
+  # -n - the name of the label
+  for i in "$@"
+  do
+  case $i in
+    -n=*|--name=*)
+    local _NAME="${i#*=}"
+    shift # past argument=value
+    ;;
+    -o=*|--owner=*)
+    local _OWNER="${i#*=}"
+    shift # past argument=value
+    ;;
+    -r=*|--repo=*)
+    local _REPO="${i#*=}"
+    shift # past argument=value
+    ;;
+    *)
+    ;;
+  esac
+  done
+
+  if [[ -z "${_NAME:-}" ]]; then
+    echo "_NAME is required. Use option -n"
+    return 1
+  fi
+
+  if [[ -z "${_OWNER:-}" ]]; then
+    echo "_OWNER is required. Use option -o"
+    return 1
+  fi
+
+  if [[ -z "${_REPO:-}" ]]; then
+    echo "_REPO is required. Use option -r"
+    return 1
+  fi
+
+
+  local CURL_OUTPUT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -X DELETE "https://api.github.com/repos/$_OWNER/$_REPO/labels/${_NAME// /%20}")
+  local HAS_ERROR=$(echo "$CURL_OUTPUT" | jq -r '.errors // empty')
+
+  # Check for error
+  if [ ! -z "$HAS_ERROR" ]; then
+    local ERROR=$(echo "$CURL_OUTPUT" | jq -r '.errors[0].code')
+    echo "Unknown error: $ERROR"
+    echo "Output from curl: "
+    echo "$CURL_OUTPUT"
+    return 1
+  else
+    echo "Deleted label \"$_NAME\" in \"$_OWNER/$_REPO\"."
+  fi
+
+}
