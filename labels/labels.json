@@ -1,14 +1,62 @@
 [
   {
-    "name": "Team: Dux",
-    "color": "1d76db"
+    "name": "problem-bug",
+    "color": "e99695"
   },
   {
-    "name": "Team: Supras",
-    "color": "1d76db"
+    "name": "problem-security",
+    "color": "e99695"
   },
   {
-    "name": "Team: Bubba Gump",
-    "color": "1d76db"
+    "name": "problem-stability",
+    "color": "e99695"
+  },
+  {
+    "name": "problem-performance",
+    "color": "e99695"
+  },
+  {
+    "name": "critical",
+    "color": "d93f0b"
+  },
+  {
+    "name": "customer-committed",
+    "color": "fbca04"
+  },
+  {
+    "name": "customer-requested",
+    "color": "fbca04"
+  },
+  {
+    "name": "enhancement-feature",
+    "color": "5319e7"
+  },
+  {
+    "name": "enhancement-optimization",
+    "color": "5319e7"
+  },
+  {
+    "name": "enhancement-quick-win",
+    "color": "5319e7"
+  },
+  {
+    "name": "team-dux",
+    "color": "0052cc"
+  },
+  {
+    "name": "team-bubba-gump",
+    "color": "0052cc"
+  },
+  {
+    "name": "team-supras",
+    "color": "0052cc"
+  },
+  {
+    "name": "team-geese",
+    "color": "0052cc"
+  },
+  {
+    "name": "mergeable",
+    "color": "0e8a16"
   }
 ]
