@@ -46,5 +46,17 @@
   {
     "name": "ApplicationEndPoint",
     "owner": "100health"
+  },
+  {
+    "name": "DataModels",
+    "owner": "100health"
+  },
+  {
+    "name": "kue",
+    "owner": "100health"
+  },
+  {
+    "name": "waterline",
+    "owner": "100health"
   }
 ]
